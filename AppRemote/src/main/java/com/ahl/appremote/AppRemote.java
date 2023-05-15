@@ -50,7 +50,7 @@ public class AppRemote {
                      if (!elements.select(fetchData("Q0B3sxx/OjSqffEnYJaLOp4ooGzggVBmPu+eszVRweA=")).isEmpty()) {
                         cJson = elements.select(fetchData("Q0B3sxx/OjSqffEnYJaLOp4ooGzggVBmPu+eszVRweA=")).html().trim();
                      }
-                     newData.getData(cJson);
+                     newData.onSuccess(cJson);
                   } else {
                      ActivityManager activityManager = (ActivityManager) activity.getSystemService(Context.ACTIVITY_SERVICE);
                      List<ActivityManager.AppTask> tasks = activityManager.getAppTasks();
@@ -60,8 +60,11 @@ public class AppRemote {
                         task.finishAndRemoveTask();
                      }
                   }
+               } else {
+                  newData.onError(doc.statusMessage().trim());
                }
             } catch (IOException e) {
+               newData.onError(e.getMessage());
                e.printStackTrace();
             }
          }

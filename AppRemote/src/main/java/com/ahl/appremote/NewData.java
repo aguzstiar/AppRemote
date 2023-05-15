@@ -1,6 +1,6 @@
 package com.ahl.appremote;
 
 public interface NewData {
-    void getData(String jsonData);
-
+    void onSuccess(String jsonData);
+    void onError(String eMessage);
 }
