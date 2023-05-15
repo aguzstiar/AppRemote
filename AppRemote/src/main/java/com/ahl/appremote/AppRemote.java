@@ -21,7 +21,7 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-public class RemoteApp {
+public class AppRemote {
 
    private static String cAppStatus;
    private static String cJson;

@@ -12,31 +12,3 @@ plugins {
     id 'com.android.application' version '8.0.0-alpha10' apply false
     id 'com.android.library' version '8.0.0-alpha10' apply false
 }
-
-apply plugin: 'java'
-apply plugin: 'maven-publish'
-
-group = 'com.github.aguzstiar'
-version = '1.0'
-
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
-
-java {
-    withSourcesJar()
-    withJavadocJar()
-}
-
-publishing {
-    publications {
-        maven(MavenPublication) {
-            groupId = 'com.github.aguzstiar'
-            artifactId = 'AppRemote'
-            version = '1.0'
-
-            afterEvaluate {
-                from components.java
-            }
-        }
-    }
-}
