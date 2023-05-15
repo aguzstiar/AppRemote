@@ -1,0 +1,21 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://android-sdk.is.com/'}
+        maven { url "https://s3.amazonaws.com/smaato-sdk-releases/" }
+    }
+}
+rootProject.name = "Application"
+include ':app'
+include ':AppRemote'
