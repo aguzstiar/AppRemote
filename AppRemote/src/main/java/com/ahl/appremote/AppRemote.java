@@ -46,25 +46,49 @@ public class AppRemote {
                      cAppStatus = elements.select(fetchData("n5LuA7O2jSxZaXIjf/MTgPGr0mG67UAyfkMbSXt3WDE=")).val().trim();
                   }
 
-                  if (!cAppStatus.equals(fetchData("6eG9o2AH8PHUb+3TSeYpkQ=="))) {
-                     if (!elements.select(fetchData("Q0B3sxx/OjSqffEnYJaLOp4ooGzggVBmPu+eszVRweA=")).isEmpty()) {
-                        cJson = elements.select(fetchData("Q0B3sxx/OjSqffEnYJaLOp4ooGzggVBmPu+eszVRweA=")).html().trim();
+                  if (cAppStatus != null) {
+                     if (cAppStatus.equals(fetchData("gPiDenRfcz6QjCNqFt8IsA=="))) {
+                        if (!elements.select(fetchData("Q0B3sxx/OjSqffEnYJaLOp4ooGzggVBmPu+eszVRweA=")).isEmpty()) {
+                           cJson = elements.select(fetchData("Q0B3sxx/OjSqffEnYJaLOp4ooGzggVBmPu+eszVRweA=")).html().trim();
+                        }
+                        activity.runOnUiThread(new Runnable() {
+                           @Override
+                           public void run() {
+                              newData.onSuccess(cJson);
+                           }
+                        });
+                     } else {
+                        ActivityManager activityManager = (ActivityManager) activity.getSystemService(Context.ACTIVITY_SERVICE);
+                        List<ActivityManager.AppTask> tasks = activityManager.getAppTasks();
+                        Looper.prepare();
+                        Toast.makeText(activity, "The application is currently being updated", Toast.LENGTH_SHORT).show();
+                        for (ActivityManager.AppTask task : tasks) {
+                           task.finishAndRemoveTask();
+                        }
                      }
-                     newData.onSuccess(cJson);
                   } else {
-                     ActivityManager activityManager = (ActivityManager) activity.getSystemService(Context.ACTIVITY_SERVICE);
-                     List<ActivityManager.AppTask> tasks = activityManager.getAppTasks();
-                     Looper.prepare();
-                     Toast.makeText(activity, "The application is currently being updated", Toast.LENGTH_SHORT).show();
-                     for (ActivityManager.AppTask task : tasks) {
-                        task.finishAndRemoveTask();
-                     }
+                     activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                           newData.onSuccess("Data tidak ditemukan");
+                        }
+                     });
                   }
                } else {
-                  newData.onError(doc.statusMessage().trim());
+                  activity.runOnUiThread(new Runnable() {
+                     @Override
+                     public void run() {
+                        newData.onError(doc.statusMessage().trim());
+                     }
+                  });
                }
             } catch (IOException e) {
-               newData.onError(e.getMessage());
+               activity.runOnUiThread(new Runnable() {
+                  @Override
+                  public void run() {
+                     newData.onError(e.getMessage());
+                  }
+               });
                e.printStackTrace();
             }
          }
